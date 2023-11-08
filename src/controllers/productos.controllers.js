@@ -35,14 +35,14 @@ export const getProducto = async (req, res) => {
 export const createProducto = async (req, res) => {
     try {
         const {
-            Nombre, Descripcion, Precio, PorcentajeDescuento, Almacenamiento,
+            Nombre, Descripcion, Precio, PorcentajeDescuento, Almacenamiento,Categoria
         } = req.body
         const query = `
-            INSERT INTO Productos (Nombre, Descripcion, Precio, PorcentajeDescuento, Almacenamiento) VALUES (?, ?, ?, ?, ?)
+            INSERT INTO Productos (Nombre, Descripcion, Precio, PorcentajeDescuento, Almacenamiento, Categoria) VALUES (?, ?, ?, ?, ?, ?)
         `
         const [rows] = await pool.query(
             query,
-            [Nombre, Descripcion, Precio, PorcentajeDescuento, Almacenamiento],
+            [Nombre, Descripcion, Precio, PorcentajeDescuento, Almacenamiento, Categoria],
         )
 
         return res.status(201).json({
@@ -52,6 +52,7 @@ export const createProducto = async (req, res) => {
             Precio,
             PorcentajeDescuento,
             Almacenamiento,
+            Categoria,
         });
     } catch (error) {
         return res.status(500).json({ message: 'Error interno del servidor' })
@@ -85,10 +86,10 @@ export const updateProducto = async (req, res) => {
         }
 
         const query = `
-        UPDATE Productos SET Nombre = IFNULL(?, Nombre), Descripcion = IFNULL(?, Descripcion), Precio = IFNULL(?, Precio), PorcentajeDescuento = IFNULL(?, PorcentajeDescuento), Almacenamiento = IFNULL(?, Almacenamiento) WHERE ID = ?
+        UPDATE Productos SET Nombre = IFNULL(?, Nombre), Descripcion = IFNULL(?, Descripcion), Precio = IFNULL(?, Precio), PorcentajeDescuento = IFNULL(?, PorcentajeDescuento), Almacenamiento = IFNULL(?, Almacenamiento), Categoria = IFFNULL (?, Categoria) WHERE ID = ?
         `
         // Actualizar el producto
-        await pool.query(query, [Nombre, Descripcion, Precio, PorcentajeDescuento, Almacenamiento]);
+        await pool.query(query, [Nombre, Descripcion, Precio, PorcentajeDescuento, Almacenamiento,Categoria]);
 
         const [rows] = await pool.query('SELECT * FROM Productos WHERE ID = ?', [id]);
         return res.status(200).json(rows[0]);

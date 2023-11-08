@@ -7,11 +7,12 @@ import { tokensInvalidos } from "../utils/tokens.utils.js"
 export const sessionValidation = async (req, res, next) => {
 
     try {
+        // Formato del token : Bearer <token>
         const token = req.headers.authorization.split(" ")[1]
         const payload = verifyToken(token, JWT_SECRET)
 
         if (tokensInvalidos.includes(token)) {
-            throw { status: 401, message: "Unauthorized" }
+            throw { status: 401, message: "No Autorizado" }
         }
 
         req.payload = payload

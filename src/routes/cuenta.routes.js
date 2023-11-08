@@ -1,14 +1,14 @@
 
 import { Router } from 'express'
 import { sessionValidation } from '../middlewares/cuenta.mw.js'
-import { loginController, registerController } from '../controllers/cuenta.controllers.js'
+import { loginController, logoutController, registerController } from '../controllers/cuenta.controllers.js'
 
 const router = Router()
 
-router.post('/login', loginController)
-router.post('/register', registerController)
+router.post('/iniciarSesion', loginController)
+router.post('/registrar', registerController)
 
-router.get("/cerrar-sesion", sessionValidation)
-router.get("/validar-sesion")
+router.get("/cerrarSesion", sessionValidation, logoutController)
+// router.get("/validarSesion")
 
 export default router

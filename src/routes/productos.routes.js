@@ -8,7 +8,7 @@ router.get('/productos', getProductos)
 
 router.get('/productos/:id', getProducto)
 
-router.post('/agregarProductos', createProducto)
+router.post('/agregarProducto', createProducto)
 
 router.put('/actualizarCantidad', updateProducto)
 
